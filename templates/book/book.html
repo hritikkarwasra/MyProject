@@ -44,7 +44,7 @@
 
 			// Create the table header row
 			var headerRow = document.createElement('tr');
-			var headers = ['Title', 'Author', 'Genre'];
+			var headers = ['Title', 'Author', 'Price'];
 			for (var i = 0; i < headers.length; i++) {
 				var th = document.createElement('th');
 				th.textContent = headers[i];
@@ -57,15 +57,24 @@
 				var book = books[j];
 				var row = document.createElement('tr');
 				var titleCell = document.createElement('td');
-				titleCell.textContent = book.title;
+				var titleLink = document.createElement('a');
+    			titleLink.textContent = book.title;
+    
+				// Set the href attribute to the value of the titleCell
+				titleLink.href = book.author+"+"+book.title;
+				
+				// Append the titleLink to the titleCell
+				titleCell.appendChild(titleLink);
+
 				var authorCell = document.createElement('td');
 				authorCell.textContent = book.author;
-				var genreCell = document.createElement('td');
-				genreCell.textContent = book.genre;
+				var priceCell = document.createElement('td');
+				priceCell.textContent = book.price;
+				
 
 				row.appendChild(titleCell);
 				row.appendChild(authorCell);
-				row.appendChild(genreCell);
+				row.appendChild(priceCell);
 				table.appendChild(row);
 			}
 			

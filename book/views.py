@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.http import JsonResponse
 from .forms import AuthorForm, BookForm
 from .models import Books, Author, Review
+import json
 
 # Create your views here.
 
@@ -49,18 +50,40 @@ def add_author(request):
         status = 400
     return HttpResponse(message , status= status)
 
-def books_by_author(request):
-    author_name = request.GET.get('author')
-    author = get_object_or_404(Author, name=author_name)
-    books = Books.objects.filter(author=author)
+def books_by_author(request, author):
+    if request.method == 'GET':
+        print(author)
+        book_list = []
+        author = Author.objects.filter( name= author).first()
+        if author:
+            books = Books.objects.filter(author=author)
 
-    book_list = []
-    for book in books:
-        book_dict = {
-            'title': book.title,
-            'author': book.author.name,
-            'genre': book.genre
-        }
-        book_list.append(book_dict)
+            for book in books:
+                book_dict = {
+                    'title': book.title,
+                    'author': book.author.name,
+                    'price': book.price
+                }
+                book_list.append(book_dict)
+        print(book_list)
 
     return JsonResponse(book_list, safe=False)
+
+def get_book(request, title):
+    context = {}
+    if request.method == 'GET':
+        print(title)
+        lst = title.split("+")
+        author_name = lst[0],
+        book_title = lst[1]
+        print(author_name, book_title)
+        author = Author.objects.filter(name = author_name)
+
+        book = Books.objects.filter(title = book_title).first()
+
+        if book:
+            context ={
+                "book":book
+            }
+        
+    return render(request, 'book/book_page.html', context)
