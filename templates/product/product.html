@@ -1,0 +1,156 @@
+{% extends 'base/base.html' %}
+{% block start %}
+
+    <div class="row" style="margin-top: 10px;">
+        
+        <div class="col-sm-6" style = "padding-left:40px; padding-right: 20px;">
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Product Description</h5>
+            <p class="card-text">
+                Product Model consists of name, description, and price.
+                Click on the button below to create a new product 
+            </p>
+            <form form action="create_product/" method="post" id="productForm" style="padding-left: 40px; padding-right: 40px; margin-top: 20px;">
+                {% csrf_token %}
+                <input type="hidden" name="success" value="{{ success }}">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputProductName">Product Name</label>
+                    <input type="text" class="form-control" name = "product_name" id="inputProductName" placeholder="Product Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputDescription">Description</label>
+                  <input type="text" class="form-control" name = "description" id="inputDescription" placeholder="Description">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputPrice">Price</label>
+                    <input type="text" class="form-control" name = "price" id="inputPrice">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Product</button>
+              </form>
+            
+            </div>
+        </div>
+        </div>
+        
+        <div class="col-sm-6" style = "padding-left:20px; padding-right: 40px;">
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Category Description</h5>
+            <p class="card-text">
+                Category Model consists of name and foreign key product.
+                Click on the button below to create a new category.
+            </p>
+            <form form action="create_category/" method="post" id="categoryForm" style="padding-left: 40px; padding-right: 40px; margin-top: 20px;">
+                {% csrf_token %}
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputProductName">Category Name</label>
+                    <input type="text" class="form-control" name = "category_name" id="inputCategorytName" placeholder="Category Name">
+                  </div>
+                  <div class="input-group">
+                    <select class="form-select" id="productObj", name= "productObj" aria-label="Example select with button addon">
+                      <option selected>Choose...</option>
+                      {% for product in products %}
+                        <option>{{ product.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                
+                </div>
+                <button type="submit" class="btn btn-primary">Create Category</button>
+              </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" style="margin-top: 40px; margin-left: 40px; margin-right: 40px;">
+      <tr>
+        <th>Category Name</th>
+        <th>Product Count</th>
+      </tr>
+      {% for category in category_counts %}
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>{{ category.count }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <div id="alertContainer"></div>
+    <script>
+        function handleFormSubmit(formId, successMessage, errorMessage) {
+            var form = document.getElementById(formId);
+            form.addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent the form from being submitted normally
+        
+                var formData = new FormData(form);
+        
+                var xhr = new XMLHttpRequest();
+                xhr.open(form.method, form.action, true);
+                xhr.setRequestHeader("X-CSRFToken", form.elements.csrfmiddlewaretoken.value);
+        
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Success: display success alert
+                        form.reset();
+                        showAlert("success", successMessage);
+                        location.reload()
+                    } else {
+                        // Error: display error alert
+                        showAlert("danger", errorMessage);
+                    }
+                };
+        
+                xhr.onerror = function() {
+                    // Error: display error alert
+                    showAlert("danger", "An error occurred while submitting the form.");
+                };
+        
+                xhr.send(formData);
+            });
+        }
+        
+        // Handling productForm
+        handleFormSubmit("productForm", "Product created successfully!", "Product creation failed.");
+        
+        // Handling categoryForm
+        handleFormSubmit("categoryForm", "Category created successfully!", "Category creation failed.");
+        
+        function showAlert(type, message) {
+            var alertContainer = document.getElementById("alertContainer");
+            
+            // Clear previous alerts
+            alertContainer.innerHTML = "";
+        
+            var alertElement = document.createElement("div");
+            alertElement.className = "alert alert-" + type;
+            alertElement.textContent = message;
+        
+            alertContainer.appendChild(alertElement);
+        }
+    </script>
+    
+    <script>
+        document.getElementById("createProductBtn").addEventListener("click", function(event) {
+          event.preventDefault();
+          window.location.href = "createProduct/";
+        });
+    </script>
+
+    <script>
+      document.getElementById("createCategoryBtn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "createCategory/";
+      });
+    </script>
+
+
+    
+{% endblock %}

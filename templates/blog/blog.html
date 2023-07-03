@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+{% block start %}
+    <div class="col-sm-12" style = "padding-left:40px; padding-right: 40px;">
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">Blog Creation</h5>
+        <p class="card-text">
+            Blog Model consists of Title, Publication Date, Author Name, Content.
+            Click on the button below to create a new blog. 
+        </p>
+        <form form action="create_blog/" method="post" id="blogForm" style="padding-left: 40px; padding-right: 40px; margin-top: 20px;" class="form-inline">
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="form-group col-sm-6">
+                <label for="inputProductName">Blog Title</label>
+                <input type="text" class="form-control" name = "blog_title" id="inputBlogTitle" placeholder="Title">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="inputAuthorName">Author Name</label>
+                <input type="text" class="form-control" name = "author_name" id="inputAuthorName" placeholder="Author Name">
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="inputContent">Content</label>
+              <input type="text" class="form-control" name = "content" id="inputContent" placeholder="Content">
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputPublicationDate">Publication Date</label>
+                <input type="date" class="form-control" name = "publicationDate" id="publicationDate" >
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Product</button>
+        </form>
+        
+        </div>
+    </div>
+    </div>
+    <table class="table table-striped" style="margin-top: 40px; margin-left: 40px; margin-right: 40px;">
+      <tr>
+        <th>Blog Title</th>
+        <th>Product Count</th>
+        <th>Publication Date</th>
+      </tr>
+      {% for blog in blogs %}
+      <tr>
+        <td><a href="/blogs/{{ blog.id }}">{{ blog.title }}</a></td>
+        <td>{{ blog.author_name }}</td>
+        <td>{{ blog.publication_date }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    
+    <script>
+    // Add an event listener for form submission
+    document.getElementById("blogForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Perform an asynchronous request to the server to submit the form
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Success! Display the success message
+                alert("Blog creation successful!");
+
+                // Reset the form
+                document.getElementById("blogForm").reset();
+            }
+        };
+        xhr.open("POST", "create_blog/", true);
+        xhr.send(new FormData(document.getElementById("blogForm")));
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% block start %}
+	<div class="b-example-divider"></div>
+	<header class="d-flex justify-content-center py-3">
+		<ul class="nav nav-pills">
+		  <li class="nav-item"><a href="author_form/" class="nav-link">Add Author</a></li>
+		  <li class="nav-item"><a href="book_form/" class="nav-link">Add Book</a></li>
+		</ul>
+	</header>
+	<div class="b-example-divider"></div>
+	<div class="input-group" style="padding-left: 100px; padding-right: 100px;">
+		<select class="form-select" id="authorObj", name= "authorObj" aria-label="Example select with button addon">
+		  <option selected>Choose...</option>
+		  {% for author in authors %}
+			<option>{{ author.name }}</option>
+		  {% endfor %}
+		</select>
+	</div>
+
+	<div id="table-container"></div>
+
+	<script>
+		document.getElementById('authorObj').addEventListener('change', function() {
+			var author = this.value;
+			// Ajax call to fetch books of the selected author from the server
+			// and create the table dynamically
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', 'author=' + author, true);
+			xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				var books = JSON.parse(xhr.responseText);
+				createTable(books);
+			}
+			};
+			xhr.send();
+			});
+		function createTable(books) {
+			// Get a reference to the div where the table will be displayed
+			var tableContainer = document.getElementById('table-container');
+
+			// Create the table element
+			var table = document.createElement('table');
+			table.className = 'table';
+
+			// Create the table header row
+			var headerRow = document.createElement('tr');
+			var headers = ['Title', 'Author', 'Genre'];
+			for (var i = 0; i < headers.length; i++) {
+				var th = document.createElement('th');
+				th.textContent = headers[i];
+				headerRow.appendChild(th);
+			}
+			table.appendChild(headerRow);
+
+			// Create a row for each book and fill in the data
+			for (var j = 0; j < books.length; j++) {
+				var book = books[j];
+				var row = document.createElement('tr');
+				var titleCell = document.createElement('td');
+				titleCell.textContent = book.title;
+				var authorCell = document.createElement('td');
+				authorCell.textContent = book.author;
+				var genreCell = document.createElement('td');
+				genreCell.textContent = book.genre;
+
+				row.appendChild(titleCell);
+				row.appendChild(authorCell);
+				row.appendChild(genreCell);
+				table.appendChild(row);
+			}
+			
+			// Clear any existing table
+			tableContainer.innerHTML = '';
+
+			// Append the table to the table container div
+			tableContainer.appendChild(table);
+			}
+	</script>
+
+	
+    
+{% endblock %}

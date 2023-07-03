@@ -1,0 +1,102 @@
+{% extends 'base/base.html' %}
+
+{% block start %}
+
+<form form action="/products/create_product/" method="post" id="productForm" style="padding-left: 40px; padding-right: 40px; margin-top: 20px;">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputProductName">Product Name</label>
+        <input type="text" class="form-control" name = "product_name" id="inputProductName" placeholder="Product Name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputDescription">Description</label>
+      <input type="text" class="form-control" name = "description" id="inputDescription" placeholder="Description">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputPrice">Price</label>
+        <input type="text" class="form-control" name = "price" id="inputPrice">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <div id="alertContainer"></div>
+
+    <script>
+    document.getElementById("productForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the form from being submitted normally
+
+        var form = event.target;
+        var formData = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader("X-CSRFToken", form.elements.csrfmiddlewaretoken.value);
+
+        xhr.onload = function() {
+        if (xhr.status === 200) {
+            // Success: display success alert
+            showAlert("success", "Product created successfully!");
+        } else {
+            // Error: display error alert
+            showAlert("danger", "Product creation failed.");
+        }
+        };
+
+        xhr.onerror = function() {
+        // Error: display error alert
+        showAlert("danger", "An error occurred while submitting the form.");
+        };
+
+        xhr.send(formData);
+    });
+
+    function showAlert(type, message) {
+        var alertContainer = document.getElementById("alertContainer");
+        
+        // Clear previous alerts
+        alertContainer.innerHTML = "";
+
+        var alertElement = document.createElement("div");
+        alertElement.className = "alert alert-" + type;
+        alertElement.textContent = message;
+
+        alertContainer.appendChild(alertElement);
+    }
+    </script>
+  <!-- <script>
+    document.getElementById("productForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+  
+      // Get form values
+      const productName = document.getElementById("inputProductName").value;
+      const description = document.getElementById("inputDescription").value;
+      const price = document.getElementById("inputPrice").value;
+  
+      // Create product object
+      const product = { productName, description, price };
+  
+      // Make POST request to backend
+      fetch("/create_product", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(product)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Product created:", data);
+        // You can perform additional actions here, such as displaying a success message or redirecting to another page
+      })
+      .catch(error => {
+        console.error("Error creating product:", error);
+        // You can handle the error here, such as displaying an error message to the user
+      });
+    });
+  </script> -->
+  
+
+{% endblock %}

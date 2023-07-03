@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+{% block start %}
+<body>
+
+
+	<div class="b-example-divider"></div>
+	
+	<h1>Add Book To Database</h1>
+	<br/><br/>
+
+		<form action="add_book/" id = "bookForm" method=POST enctype="multipart/form-data">
+			{% csrf_token %}
+
+			{{ form.as_p }}
+
+			<input type="submit" value="Submit" class="btn btn-secondary">
+
+		</form>
+
+        <script>
+            document.getElementById("bookForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevents the form from submitting via default behavior
+        
+                // Use AJAX to submit the form data and handle the response
+                var formData = new FormData(this);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", this.action, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) { // Successful response
+                        alert("Form saved successfully");
+                        location.reload();
+                    }
+                };
+                xhr.send(formData);
+            });
+        </script>
+</body>
+{% endblock %}

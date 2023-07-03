@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+{% block start %}
+<head>
+    <title>Blog</title>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .comment-form {
+            margin-top: 20px;
+        }
+        
+        .comment-input {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: 1px solid #d2d2d2;
+            border-radius: 5px;
+        }
+        
+        .submit-button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #4a86e8;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #d2d2d2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{ blog.title }}</h1>
+        <h3>Author: {{ blog.author_name }}</h3>
+        <p>Date: {{ blog.publication_date }}</p>
+        <p>{{ blog.content }}</p>
+        <h6>Comments:</h6>
+        {% for comment in blog_comments %}
+            <p> {{ comment.comment }}</p>
+        {% endfor %}
+        <form form_action= "save_comment/" method = "post" id = "commentForm" class="comment-form">
+            {% csrf_token %}
+            <label for="comment" class="sr-only">Your comment</label>
+            <textarea name = "comment_text" id="comment" rows="4" class="comment-input" placeholder="Write a comment..." required></textarea>
+            <input type="hidden" name="blog_id" value="{{ blog.id }}">
+            <button type="submit" class="submit-button">Post comment</button>
+        </form>
+        <hr>
+        <p>Created at: {{ blog.created_at }}</p>
+        <p>Updated at: {{ blog.updated_at }}</p>
+    </div>
+
+    <script>
+        document.getElementById("commentForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            var formData = new FormData(document.getElementById("commentForm")); // Create a new FormData object
+            
+            // Send the XHR request
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Success! Display the success message
+                    alert("Comment saved successfully!");
+                    location.reload()
+                    // Reset the form
+                    document.getElementById("blogForm").reset();
+                }
+            };
+            xhr.open("POST", "save_comment/", true);
+            xhr.send(formData);
+        });
+    </script>
+    
+</body>
+
+
+{% endblock %}

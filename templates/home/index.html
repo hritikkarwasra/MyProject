@@ -1,0 +1,117 @@
+{% extends 'base/base.html' %}
+
+
+{% block start %}
+<div>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+
+      <div class="col d-flex align-items-start" style="padding-left: 40px;">
+        <div class="icon-square bg-light text-dark flex-shrink-0 me-3" style="margin-top: 5px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+          </svg>
+        </div>
+        <div>
+          <h2>Books View</h2>
+          <p>On Clicking the below button you'll be redirected to books view page. Which has functionality to filter book on the basis of Author's name, and add reviews to books.</p>
+          <a href="#" class="btn btn-primary", id = "booksRedirectBtn">
+            Redirect button
+          </a>
+        </div>
+      </div>
+      
+      <div class="col d-flex align-items-start" style = "padding-left: 20px; padding-right: 20px;">
+        <div class="icon-square bg-light text-dark flex-shrink-0 me-3" style = "margin-top: 5px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" fill="currentColor" class="bi bi-boxes" viewBox="0 0 16 16">
+            <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z"/>
+          </svg>
+        </div>
+        <div>
+          <h2>Products view</h2>
+          <p>On Clicking the below button you'll be redirected to Products view page.
+            Allows user to add a new product and category to the database.
+            Gives all categories in tabulated form with total products in a given category.
+          </p>
+          <a href="#" class="btn btn-primary" id = "productRedirectBtn">
+            Redirect button
+          </a>
+        </div>
+      </div>
+
+      <div class="col d-flex align-items-start">
+        <div class="icon-square bg-light text-dark flex-shrink-0 me-3" , style = "margin-top: 5px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16">
+            <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89L8 0ZM3.777 3h8.447L8 1 3.777 3ZM2 6v7h1V6H2Zm2 0v7h2.5V6H4Zm3.5 0v7h1V6h-1Zm2 0v7H12V6H9.5ZM13 6v7h1V6h-1Zm2-1V4H1v1h14Zm-.39 9H1.39l-.25 1h13.72l-.25-1Z"/>
+          </svg>
+        </div>
+        <div>
+          <h2>Banking App</h2>
+          <p>
+            On clicking the below button you'll be redirected to which has many multiple functionalities. 
+            Such as creating new account searching accounts and updating them if already existing.
+            Filters accounts on different criterias.
+            <!-- Functionality to accept account details such as account number, balance, and account type (Savings or Credit).
+            Create a new account if the account number does not exist or update the existing account if it does.
+            Displays a form for customers to enter their account details and personal information. Filtering functionality to allow customers to
+            filter accounts based on specific criteria, such as account type or account_number(partial/exact search). -->
+          </p>
+          <a href="#" class="btn btn-primary" id = "bankingRedirectBtn">
+            Redirect button
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
+      <div class="col d-flex align-items-start" style="padding-left: 400px;">
+        <div class="icon-square bg-light text-dark flex-shrink-0 me-3" style ="margin-top: 5px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
+            <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
+            <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
+          </svg>
+        </div>
+        <div>
+          <h2>Blogs View</h2>
+          <p>
+            On clicking the below button you'll be redirected to blogs view that displays a list of the blogs.
+            With functionalities to create new blogs and comment on existing ones.
+          </p>
+          <a href="#" class="btn btn-primary" id="blogRedirectBtn">
+            Redirect button
+          </a>
+        </div>
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    
+    <!-- JavaScript for all the buttons -->
+
+    <script>
+      document.getElementById("booksRedirectBtn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "books/";
+      });
+    </script>
+
+    <script>
+      document.getElementById("productRedirectBtn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "products/";
+      });
+    </script>
+
+    <script>
+      document.getElementById("bankingRedirectBtn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "accounts/";
+      });
+    </script>
+
+    <script>
+      document.getElementById("blogRedirectBtn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "blogs/";
+      });
+    </script>
+</div>
+{% endblock %} 
